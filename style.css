@@ -1,0 +1,455 @@
+/* ===== CSS RESET & BASE STYLES ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #2563eb;
+    --secondary-color: #1e40af;
+    --text-color: #1f2937;
+    --text-light: #6b7280;
+    --bg-color: #f9fafb;
+    --card-bg: #ffffff;
+    --sidebar-width: 250px;
+    --sidebar-peek: 10px;
+    --transition-speed: 0.3s;
+    --shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg:
+        0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    overflow-x: hidden;
+}
+
+/* ===== SIDEBAR MENU ===== */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: var(--sidebar-width);
+    background: linear-gradient(
+        180deg,
+        var(--primary-color) 0%,
+        var(--secondary-color) 100%
+    );
+    transform: translateX(calc(-100% + var(--sidebar-peek)));
+    transition: transform var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    box-shadow: var(--shadow-lg);
+}
+
+.sidebar:hover {
+    transform: translateX(0);
+}
+
+.sidebar.active {
+    transform: translateX(0);
+}
+
+.sidebar-toggle {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: var(--sidebar-peek);
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar-toggle::before {
+    content: "☰";
+    color: white;
+    font-size: 20px;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+}
+
+.sidebar-content {
+    padding: 2rem 1.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-content h3 {
+    color: white;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.sidebar-content ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    flex-grow: 1;
+}
+
+.sidebar-content ul li {
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: slideIn 0.5s forwards;
+}
+
+.sidebar:hover ul li,
+.sidebar.active ul li {
+    opacity: 1;
+}
+
+.sidebar-content ul li:nth-child(1) {
+    animation-delay: 0.1s;
+}
+.sidebar-content ul li:nth-child(2) {
+    animation-delay: 0.2s;
+}
+.sidebar-content ul li:nth-child(3) {
+    animation-delay: 0.3s;
+}
+.sidebar-content ul li:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.sidebar-content a {
+    color: white;
+    text-decoration: none;
+    padding: 0.75rem 1rem;
+    display: block;
+    border-radius: 8px;
+    transition: all var(--transition-speed);
+    font-size: 1.1rem;
+}
+
+.sidebar-content a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateX(5px);
+}
+
+/* ===== MAIN CONTAINER ===== */
+.main-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin-left: var(--sidebar-peek);
+    transition: margin-left var(--transition-speed);
+}
+
+/* ===== HEADER ===== */
+header {
+    background: linear-gradient(
+        135deg,
+        var(--primary-color) 0%,
+        var(--secondary-color) 100%
+    );
+    color: white;
+    padding: 4rem 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    position: relative;
+    overflow: hidden;
+}
+
+header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,138.7C960,139,1056,117,1152,106.7C1248,96,1344,96,1392,96L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>')
+        no-repeat bottom;
+    background-size: cover;
+    opacity: 0.3;
+}
+
+.header-content {
+    position: relative;
+    z-index: 1;
+    animation: fadeInUp 1s ease-out;
+}
+
+#title {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    opacity: 0.9;
+    animation: fadeInUp 1s ease-out 0.2s backwards;
+}
+
+/* ===== MAIN CONTENT ===== */
+main {
+    flex: 1;
+    padding: 3rem 2rem;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+/* ===== SECTIONS ===== */
+section {
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: var(--primary-color);
+}
+
+/* ===== CARDS ===== */
+.card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    transition: all var(--transition-speed);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-5px);
+}
+
+/* ===== ABOUT ME SECTION ===== */
+.about-me {
+    display: flex;
+    justify-content: center;
+}
+
+.about-me .card {
+    max-width: 100%;
+}
+
+.about-me h2 {
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.about-me h4 {
+    color: var(--text-light);
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+}
+
+.about-me p {
+    margin-bottom: 1rem;
+    color: var(--text-color);
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+/* ===== PROJECTS SECTION ===== */
+.projects-section {
+    width: 100%;
+}
+
+.projects-grid {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.project-card {
+    flex: 1 1 300px;
+    max-width: 350px;
+    min-width: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background: var(--card-bg);
+    border-left: 4px solid var(--primary-color);
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.project-card h3 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.project-card p {
+    color: var(--text-light);
+    font-size: 1rem;
+    flex-grow: 1;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+    background: var(--text-color);
+    color: white;
+    padding: 2rem;
+    margin-top: auto;
+}
+
+.footer-card {
+    background: rgba(255, 255, 255, 0.1);
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.footer-card:hover {
+    transform: none;
+}
+
+.footer p {
+    margin-bottom: 1rem;
+}
+
+.social-icons {
+    margin-top: 1rem;
+}
+
+.social-links {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.social-links a,
+.footer a {
+    color: #60a5fa;
+    text-decoration: none;
+    transition: all var(--transition-speed);
+    font-weight: 500;
+}
+
+.social-links a:hover,
+.footer a:hover {
+    color: #93c5fd;
+    transform: scale(1.1);
+}
+
+/* ===== SCROLL ANIMATIONS ===== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+.fade-in:nth-child(1) {
+    animation-delay: 0.1s;
+}
+.fade-in:nth-child(2) {
+    animation-delay: 0.2s;
+}
+.fade-in:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+/* Intersection Observer classes for scroll animations */
+.card.appear {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+    #title {
+        font-size: 2.5rem;
+    }
+
+    .subtitle {
+        font-size: 1.2rem;
+    }
+
+    main {
+        padding: 2rem 1rem;
+    }
+
+    .projects-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .project-card {
+        max-width: 100%;
+        flex: 1 1 100%;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .about-me h2 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-container {
+        margin-left: 0;
+    }
+
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar:hover,
+    .sidebar.active {
+        transform: translateX(0);
+    }
+}
